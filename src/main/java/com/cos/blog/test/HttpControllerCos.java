@@ -13,11 +13,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HttpControllerCos {
 	
+	private static final String TAG = "HttpControllerCos: ";
+	
+	@GetMapping("/http/lombok")
+	public String lombokTest() {
+//		Member m = new Member(1, "ssar" , "1234", "email");
+		Member m = Member.builder().username("ssar").password("1234").email("ssar@nate.com").build();
+		System.out.println(TAG+"getter: "+m.getId());
+		m.setId(5000);
+		System.out.println(TAG+"getter: "+m.getId());
+		return "lombok test 완료";
+	}
+	
 	//인터넷 브라우저 요청은 무조건 get 요청만 가능하다
 	//http://localhost:8080/http/get(select)
 	@GetMapping("/http/get")
 	public String getTest(Member m) { //id=1&username=ssar&password=1234&email=ssar@nate.com
-		return "get 요청:" + m.getId() + ", "+ m.getUsername() + ", "+m.getPassword()+", "+m.getEmail();
+		return "get요청:" + m.getId() + ", "+ m.getUsername() + ", "+m.getPassword()+", "+m.getEmail();
 	}
 
 	//http://localhost:8080/http/post(select)
