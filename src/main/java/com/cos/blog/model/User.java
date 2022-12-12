@@ -4,11 +4,12 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.AllArgsConstructor;
@@ -22,6 +23,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder //빌더패턴
+// @DynamicInsert //insert할때 null 인 필드 제외
 public class User {
 	
 	@Id //PrimaryKey
@@ -39,10 +41,13 @@ public class User {
 	private String email;
 	//myEmail, my-email
 	
-	@ColumnDefault("'user'")
-	private String role; 
+//	@ColumnDefault("'user'")
+//	private String role; 
 	//admin, user, manager 등의 권한을 주는 역할
 	//사실 String 보다는 Enum을 쓰는게 좋다.
+	
+	@Enumerated(EnumType.STRING)
+	private RoleType role;	//(1)DB는 RoleType이라느넥 없다 (2)ADMIN, USER
 	
 	@CreationTimestamp //시간이 자동 입력
 	private Timestamp createDate;
